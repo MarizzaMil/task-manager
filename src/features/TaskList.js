@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { fetchTasks, deleteTask, updateTask, createTask } from '../services/api';
-import TaskItem from '../components/TaskItem';
+import { fetchTasks, deleteTask, updateTask, createTask } from '../services/apiTask';
+import TaskItem from '../components/TaskItem/TaskItem';
 import { useAuth } from '../context/AuthContext';
 import './TaskList.css'; 
 import { FaPlus } from 'react-icons/fa'; 
+import AuthModal from '../components/AuthModal/AuthModal';
 
 const TaskList = () => {
     const [tasks, setTasks] = useState([]);
     const [newTask, setNewTask] = useState({ title: '', description: '' });
     const { user } = useAuth(); 
+    const [isModalOpen, setIsModalOpen] = useState(false); 
 
     useEffect(() => {
         const getTasks = async () => {
@@ -23,16 +25,27 @@ const TaskList = () => {
     }, []);
 
     const handleDelete = async (id) => {
-        await deleteTask(id);
-        setTasks(tasks.filter(task => task.id !== id));
+        if (user){
+            await deleteTask(id);
+            setTasks(tasks.filter(task => task.id !== id));
+        } else {
+            setIsModalOpen(true)
+        }
+
     };
 
     const handleAddTask = async () => {
-        if (newTask.title) {
-            const createdTask = await createTask(newTask);
-            setTasks([...tasks, createdTask]);
-            setNewTask({ title: '', description: '' }); 
+        if (user){
+            if (newTask.title) {
+                const createdTask = await createTask(newTask);
+                setTasks([...tasks, createdTask]);
+                setNewTask({ title: '', description: '' }); 
+            }
+        } else {
+            setIsModalOpen(true)
         }
+
+
     };
 
     const handleToggleCompleted = async (id) => {
@@ -45,7 +58,7 @@ const TaskList = () => {
     return (
         <div className="task-list-container">
             <h1 className="task-list-title">My Task List</h1>
-            {user && (
+            {(
                 <div className="add-task-container">
                     <input
                         type="text"
@@ -73,6 +86,8 @@ const TaskList = () => {
                     <p className="no-tasks-message">No tasks available. Please add some!</p>
                 )}
             </div>
+            {isModalOpen && <AuthModal onClose={() => setIsModalOpen(false)} />}
+
         </div>
     );
 };
