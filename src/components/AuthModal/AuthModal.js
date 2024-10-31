@@ -41,7 +41,7 @@ const AuthModal = ({ onClose }) => {
             try {
                 const response = await apiLogin(email, password);
                 if (response.token) {
-                    login(response.data);  // Save user data in AuthContext
+                    login(response); 
                     onClose();
                 } else {
                     setErrors({ general: response.message || 'Login failed' });
@@ -61,7 +61,7 @@ const AuthModal = ({ onClose }) => {
             try {
                 const response = await apiRegister(email, password);
                 if (response.token) {
-                    login(response.data);  // Save user data in AuthContext
+                    login(response); 
                     onClose();
                 } else {
                     setErrors({ general: response.message || 'Sign Up failed' });
