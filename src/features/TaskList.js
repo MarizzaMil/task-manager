@@ -3,14 +3,17 @@ import { fetchTasks, deleteTask, updateTask, createTask } from '../services/apiT
 import TaskItem from '../components/TaskItem/TaskItem';
 import { useAuth } from '../context/AuthContext';
 import TaskModal from '../components/TaskModal/TaskModal';
+import AuthModal from '../components/AuthModal/AuthModal';
 import './TaskList.css';
 import { FaPlus } from 'react-icons/fa';
 
 const TaskList = () => {
     const [tasks, setTasks] = useState([]);
-    const [currentTask, setCurrentTask] = useState(null); // Track task to edit
-    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [currentTask, setCurrentTask] = useState(null); 
+    const [isTaskModalOpen, setIsTaskModalOpen] = useState(false);
+    const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
     const { user } = useAuth();
+
 
     useEffect(() => {
         const getTasks = async () => {
@@ -29,32 +32,42 @@ const TaskList = () => {
             await deleteTask(id);
             setTasks(tasks.filter(task => task.id !== id));
         } else {
-            setIsModalOpen(true);
+            setIsAuthModalOpen(true);
         }
     };
 
     const handleSaveTask = async (task) => {
         if (user) {
             if (task.id) {
-                await updateTask(task.id, task); // Update existing task
+                await updateTask(task.id, task); 
                 setTasks(tasks.map(t => (t.id === task.id ? task : t)));
             } else {
                 const createdTask = await createTask(task); // Create new task
                 setTasks([...tasks, createdTask]);
             }
-            setIsModalOpen(false);
+            setIsTaskModalOpen(false);
             setCurrentTask(null); // Reset currentTask after save
         }
     };
 
     const openAddModal = () => {
-        setCurrentTask({ title: '', description: '' });
-        setIsModalOpen(true);
+        if (user) {
+            setCurrentTask({ title: '', description: '' });
+            setIsTaskModalOpen(true);
+        } else {
+            setIsAuthModalOpen(true);
+        }
+
     };
 
     const openEditModal = (task) => {
-        setCurrentTask(task);
-        setIsModalOpen(true);
+        if (user) {
+            setCurrentTask(task);
+            setIsTaskModalOpen(true);
+        } else {
+            setIsAuthModalOpen(true);
+        }
+
     };
 
     // Separate tasks into "ToDo" and "Complete" columns
@@ -112,11 +125,12 @@ const TaskList = () => {
                     )}
                 </div>
             </div>
-            {isModalOpen && (
+            {isAuthModalOpen && <AuthModal onClose={() => setIsAuthModalOpen(false)} />}
+            {isTaskModalOpen && (
                 <TaskModal
                     task={currentTask}
                     onSave={handleSaveTask}
-                    onClose={() => setIsModalOpen(false)}
+                    onClose={() => setIsTaskModalOpen(false)}
                 />
             )}
         </div>
