@@ -1,5 +1,6 @@
 import React from 'react';
 import { useAuth } from '../../context/AuthContext';
+import Categories from '../Categories/Categories'; // Import the Categories component
 import './Menu.css';
 
 const Menu = () => {
@@ -17,9 +18,9 @@ const Menu = () => {
                 </>
             )}
             <div className="menu-links">
-                <a href="/categories">Categories</a>
                 <a href="/about">About</a>
             </div>
+            <Categories /> {/* Add the Categories component here */}
         </div>
     );
 };
