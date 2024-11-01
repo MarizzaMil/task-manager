@@ -57,6 +57,10 @@ const TaskList = () => {
         setIsModalOpen(true);
     };
 
+    // Separate tasks into "ToDo" and "Complete" columns
+    const todoTasks = tasks.filter(task => !task.completed);
+    const completedTasks = tasks.filter(task => task.completed);
+
     return (
         <div className="task-list-container">
             <h1 className="task-list-title">My Task List</h1>
@@ -65,24 +69,48 @@ const TaskList = () => {
                     <FaPlus /> Add Task
                 </button>
             </div>
-            <div className="task-items">
-                {tasks.length > 0 ? (
-                    tasks.map(task => (
-                        <TaskItem 
-                            key={task.id} 
-                            task={task} 
-                            onDelete={handleDelete} 
-                            onEdit={() => openEditModal(task)} 
-                            onToggleCompleted={async (id) => {
-                                const updatedTask = { ...task, completed: !task.completed };
-                                await updateTask(id, updatedTask);
-                                setTasks(tasks.map(t => (t.id === id ? updatedTask : t)));
-                            }}
-                        />
-                    ))
-                ) : (
-                    <p className="no-tasks-message">No tasks available. Please add some!</p>
-                )}
+            <div className="task-columns">
+                <div className="task-column">
+                    <h2>ToDo</h2>
+                    {todoTasks.length > 0 ? (
+                        todoTasks.map(task => (
+                            <TaskItem 
+                                key={task.id} 
+                                task={task} 
+                                onDelete={handleDelete} 
+                                onEdit={() => openEditModal(task)} 
+                                onToggleCompleted={async (id) => {
+                                    const updatedTask = { ...task, completed: !task.completed };
+                                    await updateTask(id, updatedTask);
+                                    setTasks(tasks.map(t => (t.id === id ? updatedTask : t)));
+                                }}
+                            />
+                        ))
+                    ) : (
+                        <p className="no-tasks-message">No tasks to do!</p>
+                    )}
+                </div>
+                
+                <div className="task-column">
+                    <h2>Complete</h2>
+                    {completedTasks.length > 0 ? (
+                        completedTasks.map(task => (
+                            <TaskItem 
+                                key={task.id} 
+                                task={task} 
+                                onDelete={handleDelete} 
+                                onEdit={() => openEditModal(task)} 
+                                onToggleCompleted={async (id) => {
+                                    const updatedTask = { ...task, completed: !task.completed };
+                                    await updateTask(id, updatedTask);
+                                    setTasks(tasks.map(t => (t.id === id ? updatedTask : t)));
+                                }}
+                            />
+                        ))
+                    ) : (
+                        <p className="no-tasks-message">No completed tasks!</p>
+                    )}
+                </div>
             </div>
             {isModalOpen && (
                 <TaskModal
