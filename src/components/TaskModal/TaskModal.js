@@ -1,46 +1,50 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './TaskModal.css';
 
-const TaskModal = ({ isOpen, onClose, onSave }) => {
-    const [task, setTask] = useState({ title: '', description: '' });
+const TaskModal = ({ task, onSave, onClose }) => {
+    const [taskData, setTaskData] = useState(task || { title: '', description: '' });
+
+    useEffect(() => {
+        setTaskData(task || { title: '', description: '' });
+    }, [task]);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setTask((prevTask) => ({ ...prevTask, [name]: value }));
+        setTaskData(prev => ({ ...prev, [name]: value }));
     };
 
     const handleSave = () => {
-        if (task.title.trim()) {
-            onSave(task);
-            setTask({ title: '', description: '' });
-            onClose();
+        if (taskData.title.trim()) {
+            onSave(taskData);
         }
     };
 
-    if (!isOpen) return null;
-
     return (
         <div className="modal-overlay">
-            <div className="modal-content">
-                <h2>Add New Task</h2>
+            <div className="task-modal">
+                <h2>{taskData.id ? 'Edit Task' : 'Add New Task'}</h2>
                 <input
                     type="text"
                     name="title"
-                    placeholder="Task Title"
-                    value={task.title}
+                    value={taskData.title}
                     onChange={handleChange}
-                    className="modal-input"
+                    placeholder="Task Title"
+                    className="task-input"
                 />
                 <textarea
                     name="description"
-                    placeholder="Task Description"
-                    value={task.description}
+                    value={taskData.description}
                     onChange={handleChange}
-                    className="modal-textarea"
+                    placeholder="Task Description"
+                    className="task-input"
                 />
                 <div className="modal-actions">
-                    <button onClick={handleSave} className="modal-save-button">Save</button>
-                    <button onClick={onClose} className="modal-cancel-button">Cancel</button>
+                    <button className="save-task-button" onClick={handleSave}>
+                        Save
+                    </button>
+                    <button className="cancel-task-button" onClick={onClose}>
+                        Cancel
+                    </button>
                 </div>
             </div>
         </div>

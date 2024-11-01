@@ -1,16 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { fetchTasks, deleteTask, updateTask, createTask } from '../services/apiTask';
 import TaskItem from '../components/TaskItem/TaskItem';
-import TaskModal from '../components/TaskModal/TaskModal';
-import AuthModal from '../components/AuthModal/AuthModal';
 import { useAuth } from '../context/AuthContext';
+import TaskModal from '../components/TaskModal/TaskModal';
 import './TaskList.css';
 import { FaPlus } from 'react-icons/fa';
 
 const TaskList = () => {
     const [tasks, setTasks] = useState([]);
-    const [isTaskModalOpen, setIsTaskModalOpen] = useState(false);
-    const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+    const [currentTask, setCurrentTask] = useState(null); // Track task to edit
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const { user } = useAuth();
 
     useEffect(() => {
@@ -28,57 +27,70 @@ const TaskList = () => {
     const handleDelete = async (id) => {
         if (user) {
             await deleteTask(id);
-            setTasks(tasks.filter((task) => task.id !== id));
+            setTasks(tasks.filter(task => task.id !== id));
         } else {
-            setIsAuthModalOpen(true);
+            setIsModalOpen(true);
         }
     };
 
-    const handleAddTask = async (newTask) => {
-        const createdTask = await createTask(newTask);
-        setTasks([...tasks, createdTask]);
+    const handleSaveTask = async (task) => {
+        if (user) {
+            if (task.id) {
+                await updateTask(task.id, task); // Update existing task
+                setTasks(tasks.map(t => (t.id === task.id ? task : t)));
+            } else {
+                const createdTask = await createTask(task); // Create new task
+                setTasks([...tasks, createdTask]);
+            }
+            setIsModalOpen(false);
+            setCurrentTask(null); // Reset currentTask after save
+        }
     };
 
-    const handleToggleCompleted = async (id) => {
-        const taskToUpdate = tasks.find((task) => task.id === id);
-        const updatedTask = { ...taskToUpdate, completed: !taskToUpdate.completed };
-        await updateTask(id, updatedTask);
-        setTasks(tasks.map((task) => (task.id === id ? updatedTask : task)));
+    const openAddModal = () => {
+        setCurrentTask({ title: '', description: '' });
+        setIsModalOpen(true);
+    };
+
+    const openEditModal = (task) => {
+        setCurrentTask(task);
+        setIsModalOpen(true);
     };
 
     return (
         <div className="task-list-container">
             <h1 className="task-list-title">My Task List</h1>
             <div className="add-task-container">
-                <button
-                    className="add-task-button"
-                    onClick={() => setIsTaskModalOpen(true)}
-                >
+                <button className="add-task-button" onClick={openAddModal}>
                     <FaPlus /> Add Task
                 </button>
             </div>
             <div className="task-items">
                 {tasks.length > 0 ? (
-                    tasks.map((task) => (
-                        <TaskItem
-                            key={task.id}
-                            task={task}
-                            onDelete={handleDelete}
-                            onToggleCompleted={handleToggleCompleted}
+                    tasks.map(task => (
+                        <TaskItem 
+                            key={task.id} 
+                            task={task} 
+                            onDelete={handleDelete} 
+                            onEdit={() => openEditModal(task)} 
+                            onToggleCompleted={async (id) => {
+                                const updatedTask = { ...task, completed: !task.completed };
+                                await updateTask(id, updatedTask);
+                                setTasks(tasks.map(t => (t.id === id ? updatedTask : t)));
+                            }}
                         />
                     ))
                 ) : (
                     <p className="no-tasks-message">No tasks available. Please add some!</p>
                 )}
             </div>
-            {isTaskModalOpen && (
+            {isModalOpen && (
                 <TaskModal
-                    isOpen={isTaskModalOpen}
-                    onClose={() => setIsTaskModalOpen(false)}
-                    onSave={handleAddTask}
+                    task={currentTask}
+                    onSave={handleSaveTask}
+                    onClose={() => setIsModalOpen(false)}
                 />
             )}
-            {isAuthModalOpen && <AuthModal onClose={() => setIsAuthModalOpen(false)} />}
         </div>
     );
 };

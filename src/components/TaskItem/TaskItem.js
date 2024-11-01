@@ -1,6 +1,6 @@
 import React from 'react';
-import './TaskItem.css'; 
-import { FaEdit, FaTrash } from 'react-icons/fa'; 
+import './TaskItem.css';
+import { FaEdit, FaTrash } from 'react-icons/fa';
 
 const TaskItem = ({ task, onDelete, onEdit, onToggleCompleted }) => {
     return (
@@ -16,7 +16,7 @@ const TaskItem = ({ task, onDelete, onEdit, onToggleCompleted }) => {
                 <p className="task-description">{task.description}</p>
             </div>
             <div className="task-actions">
-                <button className="edit-task-button" onClick={() => onEdit(task.id)}>
+                <button className="edit-task-button" onClick={onEdit}>
                     <FaEdit />
                 </button>
                 <button className="delete-task-button" onClick={() => onDelete(task.id)}>

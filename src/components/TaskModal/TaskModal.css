@@ -4,56 +4,88 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.6); /* Darker overlay */
     display: flex;
     align-items: center;
     justify-content: center;
     z-index: 1000;
+    animation: fadeIn 0.3s ease;
 }
 
-.modal-content {
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.task-modal {
     background: #fff;
-    padding: 20px;
-    border-radius: 8px;
+    padding: 20px 25px;
+    border-radius: 10px;
     width: 90%;
-    max-width: 400px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    max-width: 500px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+    from { transform: translateY(-20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+.task-modal h2 {
+    font-size: 1.8em;
+    color: #333;
+    margin-bottom: 15px;
     text-align: center;
 }
 
-.modal-input,
-.modal-textarea {
+.task-input {
     width: 100%;
-    margin: 10px 0;
     padding: 10px;
+    margin: 10px 0;
     border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 16px;
+    border-radius: 6px;
+    font-size: 1em;
+    color: #333;
+    transition: border-color 0.3s;
 }
 
-.modal-textarea {
-    resize: vertical;
+.task-input:focus {
+    border-color: #4caf50;
+    outline: none;
+    box-shadow: 0 0 5px rgba(76, 175, 80, 0.2);
 }
 
 .modal-actions {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
+    margin-top: 20px;
 }
 
-.modal-save-button {
-    background: #4caf50;
-    color: white;
+.save-task-button, .cancel-task-button {
     padding: 10px 20px;
+    font-size: 1em;
+    font-weight: bold;
     border: none;
-    border-radius: 4px;
+    border-radius: 5px;
     cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
-.modal-cancel-button {
-    background: #f44336;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
+.save-task-button {
+    background-color: #4caf50;
+    color: #fff;
+}
+
+.save-task-button:hover {
+    background-color: #45a049;
+}
+
+.cancel-task-button {
+    background-color: #f44336;
+    color: #fff;
+}
+
+.cancel-task-button:hover {
+    background-color: #e53935;
 }
