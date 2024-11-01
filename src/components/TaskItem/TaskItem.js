@@ -12,7 +12,7 @@ const TaskItem = ({ task, onDelete, onEdit, onToggleCompleted }) => {
                 className="completed-checkbox"
             />
             <div className="task-content">
-                <h3 className={`task-title ${task.completed ? 'completed' : ''}`}>{task.title}</h3>
+                <h2 className={`task-title ${task.completed ? 'completed' : ''}`}>{task.title}</h2>
                 <p className="task-description">{task.description}</p>
             </div>
             <div className="task-actions">
