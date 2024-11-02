@@ -6,10 +6,10 @@ const TaskModal = ({ task, onSave, onClose, categories = [] }) => {
     const initialTaskData = task || { title: '', description: '', category: '' };
     const initialCategory = task?.category?.name || ''; 
     const options = categories.map(category => ({
-        value: category,
+        value: category.name,
         label: category,
     }));
-
+console.log("initialCategory", initialCategory)
     const [taskData, setTaskData] = useState(initialTaskData);
     const [selectedCategory, setSelectedCategory] = useState(initialCategory);
 

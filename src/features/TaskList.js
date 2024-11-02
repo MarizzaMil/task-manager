@@ -72,7 +72,9 @@ const TaskList = () => {
         if (user) {
             if (task.id) {
                 await updateTask(task.id, task);
-                setTasks(tasks.map(t => (t.id === task.id ? task : t)));
+                setTasks(tasks.map(t => 
+                    t.id === task.id ? { ...t, ...task, category: task.category } : t
+                ));
             } else {
                 const createdTask = await createTask(task);
                 setTasks([...tasks, createdTask]);
