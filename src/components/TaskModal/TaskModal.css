@@ -40,20 +40,23 @@
 }
 
 .task-input {
-    width: 100%;
-    padding: 10px;
     margin: 10px 0;
-    border: 1px solid #ddd;
-    border-radius: 6px;
-    font-size: 1em;
-    color: #333;
-    transition: border-color 0.3s;
+    padding: 10px; 
+    padding-left: 40px;
+    width: 100%;
+    border: 1px solid #D0D0D0;
+    border-radius: 8px;
+    font-size: 16px;
+    box-sizing: border-box;
+    font-size: 14px;
+    color: #828282;
+    font-weight: 400;
 }
 
 .task-input:focus {
-    border-color: #4caf50;
+    border-color: #5769D4; 
     outline: none;
-    box-shadow: 0 0 5px rgba(76, 175, 80, 0.2);
+    box-shadow: 0 0 10px 3px rgba(87, 105, 212, 0.30);
 }
 
 .modal-actions {
@@ -73,19 +76,54 @@
 }
 
 .save-task-button {
-    background-color: #4caf50;
-    color: #fff;
+    background-color: #BDE8CA;
+    color: #323232;
 }
 
 .save-task-button:hover {
-    background-color: #45a049;
+    background-color: #41B3A2;
 }
 
 .cancel-task-button {
-    background-color: #f44336;
-    color: #fff;
+    background-color: #F0C1E1;
+    color: #323232;
 }
 
 .cancel-task-button:hover {
-    background-color: #e53935;
+    background-color: #CB80AB;
+}
+.category-dropdown {
+    margin: 10px 0;
+}
+
+.category-dropdown select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #D0D0D0;
+    border-radius: 8px;
+    font-size: 14px;
+    color: #828282;
+    background-color: #ffffff;
+    appearance: none; /* Remove default arrow */
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="%23323232" viewBox="0 0 16 16"><path d="M2 5.5L8 11l6-5.5H2z"/></svg>'); /* Custom dropdown arrow */
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 10px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.category-dropdown select:focus {
+    border-color: #5769D4;
+    outline: none;
+    box-shadow: 0 0 10px 3px rgba(87, 105, 212, 0.30);
+}
+
+.category-dropdown option {
+    padding: 10px;
+    background-color: #ffffff;
+    color: #323232;
+}
+
+.category-dropdown option:hover {
+    background-color: #BDE8CA; /* Highlight option on hover */
 }

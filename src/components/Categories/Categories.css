@@ -31,25 +31,28 @@ h2 {
     transition: background-color 0.2s; /* Smooth hover effect */
 }
 
+.category-item .category-name {
+    background-color: #FDDBBB; 
+}
+
 .category-item:hover {
-    background-color: #FFF9BF; /* Highlight on hover */
+    background-color: #FFF9BF; 
 }
 
 .category-content {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 100%; /* Ensure it takes full width */
+    width: 100%;
 }
 
 .category-name {
-    font-weight: 500; /* Slightly bolder for category names */
-    color: #555; /* Dark gray for text */
+    font-weight: 500;
 }
 
 .action-buttons {
     display: flex;
-    gap: 10px; /* Spacing between action buttons */
+    gap: 10px; 
 }
 
 .btn {
@@ -66,27 +69,27 @@ h2 {
 }
 
 .btn-edit {
-    background-color: #2196F3; /* Blue for edit */
+    background-color: #2196F3; 
     color: white;
 }
 
 .btn-remove {
-    background-color: #f44336; /* Red for remove */
+    background-color: #f44336; 
     color: white;
 }
 
 .btn-save {
-    background-color: #4CAF50; /* Green for save */
+    background-color: #4CAF50; 
     color: white;
 }
 
 .btn-cancel {
-    background-color: #ff9800; /* Orange for cancel */
+    background-color: #ff9800; 
     color: white;
 }
 
 .btn:hover {
-    opacity: 0.9; /* Slightly fade on hover */
+    opacity: 0.9;
 }
 
 .add-category {
@@ -99,12 +102,12 @@ h2 {
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    margin-right: 10px; /* Space between input and button */
+    margin-right: 10px; 
 }
 
 .editing-area {
     display: flex;
-    gap: 10px; /* Space between inputs and buttons */
+    gap: 10px; 
 }
 
 .category-input:focus {

@@ -2,7 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { fetchCategories, createCategory, updateCategory, deleteCategory } from '../../services/apiCategory';
 import { useAuth } from '../../context/AuthContext';
 import './Categories.css';
-import { FaEdit, FaTrash } from 'react-icons/fa';
+import { FaEdit, FaCheck, FaTrash } from 'react-icons/fa';
+import { FaX } from 'react-icons/fa6';
+
 
 const Categories = () => {
     const { user } = useAuth();
@@ -66,7 +68,7 @@ const Categories = () => {
                     {categories.map(category => (
                         <li key={category.id} className="category-item">
                             {editingCategory === category.id ? (
-                                <div className="editing-area">
+                                <div className="category-content">
                                     <input
                                         type="text"
                                         value={editingCategoryName}
@@ -74,8 +76,15 @@ const Categories = () => {
                                         placeholder="Edit category name"
                                         className="category-input"
                                     />
-                                    <button className="btn btn-save" onClick={() => handleEditCategory(category.id)}>Save</button>
-                                    <button className="btn btn-cancel" onClick={() => setEditingCategory(null)}>Cancel</button>
+                                    <div className="action-buttons">
+                                        <button className="edit-task-button" onClick={() => handleEditCategory(category.id)}>
+                                        <FaCheck />
+                                        </button>
+                                        <button className="edit-task-button" onClick={() => setEditingCategory(null)}>
+                                        <FaX />
+                                        </button>
+                                    </div>
+
                                 </div>
                             ) : (
                                 <div className="category-content">

@@ -30,8 +30,19 @@
 }
 
 .task-description {
+    padding-inline: 10px;;
     color: #666;
 }
+
+.category-name {
+    padding: 10px; 
+    color: #666; 
+    margin-top: 10px; 
+    background-color: #FDDBBB; 
+    border-radius: 8px; 
+    display: inline-block; 
+}
+
 
 .category-dropdown {
     margin-top: 10px;
@@ -95,7 +106,7 @@
 }
 
 .custom-checkbox input:checked + .checkmark {
-    background-color: #3949AB; 
+    background-color: #BDE8CA; 
 }
 
 .checkmark:after {

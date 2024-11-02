@@ -5,12 +5,6 @@ import { FaEdit, FaTrash } from 'react-icons/fa';
 const TaskItem = ({ task, onDelete, onEdit, onToggleCompleted }) => {
     return (
         <div className="task-item">
-            {/* <input
-                type="checkbox"
-                checked={task.completed}
-                onChange={() => onToggleCompleted(task.id)}
-                className="completed-checkbox"
-            /> */}
             <label className="custom-checkbox">
                 <input
                     type="checkbox"
