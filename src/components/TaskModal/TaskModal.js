@@ -9,7 +9,7 @@ const TaskModal = ({ task, onSave, onClose, categories = [] }) => {
         value: category.name,
         label: category,
     }));
-console.log("initialCategory", initialCategory)
+
     const [taskData, setTaskData] = useState(initialTaskData);
     const [selectedCategory, setSelectedCategory] = useState(initialCategory);
 

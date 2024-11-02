@@ -25,20 +25,16 @@ const TaskList = () => {
                 const categoryMap = Object.fromEntries(
                     categoriesResponse.map(category => [category.id, category])
                 );
-                console.log("categoryMap:", categoryMap);
         
                 const tasksWithCategoryNames = tasksResponse.map(task => {
                     const category = task.category ? categoryMap[task.category.id] : null;
-        
-                    console.log("category:", category);
         
                     return {
                         ...task,
                         category: category ? category : null 
                     };
                 });
-        
-                console.log("tasksWithCategoryNames:", tasksWithCategoryNames);
+
                 setTasks(tasksWithCategoryNames);
             } catch (error) {
                 console.error('Error fetching tasks:', error);
@@ -71,12 +67,23 @@ const TaskList = () => {
     const handleSaveTask = async (task) => {
         if (user) {
             if (task.id) {
-                await updateTask(task.id, task);
-                setTasks(tasks.map(t => 
-                    t.id === task.id ? { ...t, ...task, category: categories.find(c => c.name === task.category) } : t
-                ));
+                const updatedTask = await updateTask(task.id, task);
+                console.log("updatedTask", updatedTask);
+    
+                const updatedTasks = tasks.map(t => 
+                    t.id === task.id 
+                        ? { 
+                            ...t, 
+                            ...updatedTask, 
+                            category: categories.find(c => c.name === updatedTask.category.name) || updatedTask.category 
+                        } 
+                        : t
+                );
+                console.log("updatedTasks", updatedTasks);
+                setTasks(updatedTasks);
             } else {
                 const createdTask = await createTask(task);
+                console.log("createdTask",createdTask)
                 setTasks([...tasks, createdTask]);
             }
             setIsTaskModalOpen(false);
