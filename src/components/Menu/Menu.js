@@ -11,16 +11,14 @@ const Menu = () => {
             <h2>Let’s Get Things Done!</h2>
             {user && (
                 <>
-                    <p>Email: {user.user.email}</p>
+                    <p className="menu-links">Email: {user.user.email}</p>
                     <button className="logout-button" onClick={logout}>
                         Logout
                     </button>
                 </>
             )}
-            <div className="menu-links">
-                <a href="/about">About</a>
-            </div>
-            <Categories /> {/* Add the Categories component here */}
+
+            <Categories /> 
         </div>
     );
 };

@@ -2,6 +2,7 @@
     display: flex;
     align-items: center;
     padding: 15px;
+    margin-top: 10px;
     background-color: #ffffff;
     border-radius: 5px;
     box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
@@ -48,16 +49,71 @@
     gap: 10px;
 }
 
-.edit-task-button,
+.edit-task-button {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: #8967B3;
+    font-size: 1.2em;
+}
+
 .delete-task-button {
     background: transparent;
     border: none;
     cursor: pointer;
-    color: #3949AB;
+    color: #CB80AB;
     font-size: 1.2em;
 }
 
 .edit-task-button:hover,
 .delete-task-button:hover {
-    color: #1976D2;
+    color: #624E88;
+}
+.custom-checkbox {
+    position: relative;
+    display: inline-block;
+    width: 24px; 
+    height: 24px; 
+}
+
+.custom-checkbox input {
+    opacity: 0; 
+    position: absolute;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+.checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 24px; 
+    width: 24px; 
+    background-color: #eee; 
+    border-radius: 4px; 
+}
+
+.custom-checkbox input:checked + .checkmark {
+    background-color: #3949AB; 
+}
+
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+.custom-checkbox input:checked + .checkmark:after {
+    display: block;
+}
+
+.custom-checkbox .checkmark:after {
+    left: 9px; 
+    top: 5px; 
+    width: 5px; 
+    height: 10px; 
+    border: solid white; 
+    border-width: 0 2px 2px 0; 
+    transform: rotate(45deg);
 }

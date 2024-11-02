@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { fetchTasks, deleteTask, updateTask, createTask } from '../services/apiTask';
-import { fetchCategories } from '../services/apiCategory'; // Make sure to import fetchCategories
+import { fetchCategories } from '../services/apiCategory'; 
 import TaskItem from '../components/TaskItem/TaskItem';
 import { useAuth } from '../context/AuthContext';
 import TaskModal from '../components/TaskModal/TaskModal';
@@ -10,7 +10,7 @@ import { FaPlus } from 'react-icons/fa';
 
 const TaskList = () => {
     const [tasks, setTasks] = useState([]);
-    const [categories, setCategories] = useState([]); // New state for categories
+    const [categories, setCategories] = useState([]); 
     const [currentTask, setCurrentTask] = useState(null);
     const [isTaskModalOpen, setIsTaskModalOpen] = useState(false);
     const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
@@ -22,22 +22,19 @@ const TaskList = () => {
                 const tasksResponse = await fetchTasks();
                 const categoriesResponse = await fetchCategories();
         
-                // Create a map of categories with their IDs
                 const categoryMap = Object.fromEntries(
                     categoriesResponse.map(category => [category.id, category])
                 );
                 console.log("categoryMap:", categoryMap);
         
-                // Map tasks to include the full category object
                 const tasksWithCategoryNames = tasksResponse.map(task => {
-                    // Ensure task.category exists and use its id to find the corresponding category
                     const category = task.category ? categoryMap[task.category.id] : null;
         
                     console.log("category:", category);
         
                     return {
                         ...task,
-                        category: category ? category : null // If category is found, return it; otherwise, return null
+                        category: category ? category : null 
                     };
                 });
         
@@ -51,7 +48,7 @@ const TaskList = () => {
         const getCategories = async () => {
             try {
                 const response = await fetchCategories();
-                const categoryNames = response.map(category => category.name); // Extract category names
+                const categoryNames = response.map(category => category.name); 
                 setCategories(categoryNames);
             } catch (error) {
                 console.error('Error fetching categories:', error);
@@ -59,7 +56,7 @@ const TaskList = () => {
         };
 
         getTasks();
-        getCategories(); // Call fetchCategories when the component mounts
+        getCategories(); 
     }, []);
 
     const handleDelete = async (id) => {
@@ -81,7 +78,7 @@ const TaskList = () => {
                 setTasks([...tasks, createdTask]);
             }
             setIsTaskModalOpen(false);
-            setCurrentTask(null); // Reset currentTask after save
+            setCurrentTask(null); 
         }
     };
 
@@ -111,7 +108,7 @@ const TaskList = () => {
             <h1 className="task-list-title">My Task List</h1>
             <div className="add-task-container">
                 <button className="add-task-button" onClick={openAddModal}>
-                    <FaPlus /> Add Task
+                    <FaPlus />  ADD TASK
                 </button>
             </div>
             <div className="task-columns">
@@ -119,7 +116,7 @@ const TaskList = () => {
                     <h2>ToDo</h2>
                     {todoTasks.length > 0 ? (
                         todoTasks.map(task => (
-                            <TaskItem 
+                            <TaskItem
                                 key={task.id} 
                                 task={task} 
                                 onDelete={handleDelete} 
@@ -138,7 +135,7 @@ const TaskList = () => {
                 </div>
                 
                 <div className="task-column">
-                    <h2>Complete</h2>
+                    <h2>Completed</h2>
                     {completedTasks.length > 0 ? (
                         completedTasks.map(task => (
                             <TaskItem 
@@ -151,7 +148,7 @@ const TaskList = () => {
                                     await updateTask(id, updatedTask);
                                     setTasks(tasks.map(t => (t.id === id ? updatedTask : t)));
                                 }}
-                                categories={categories} // Pass categories to TaskItem
+                                categories={categories} 
                             />
                         ))
                     ) : (

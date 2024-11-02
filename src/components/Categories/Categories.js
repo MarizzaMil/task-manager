@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { fetchCategories, createCategory, updateCategory, deleteCategory } from '../../services/apiCategory';
 import { useAuth } from '../../context/AuthContext';
 import './Categories.css';
+import { FaEdit, FaTrash } from 'react-icons/fa';
 
 const Categories = () => {
     const { user } = useAuth();
@@ -81,11 +82,11 @@ const Categories = () => {
                                     <span className="category-name">{category.name}</span>
                                     {user && (
                                         <div className="action-buttons">
-                                            <button className="btn btn-edit" onClick={() => { setEditingCategory(category.id); setEditingCategoryName(category.name); }}>
-                                                Edit
+                                            <button className="edit-task-button" onClick={() => { setEditingCategory(category.id); setEditingCategoryName(category.name); }}>
+                                            <FaEdit />
                                             </button>
-                                            <button className="btn btn-remove" onClick={() => handleDeleteCategory(category.id)}>
-                                                Remove
+                                            <button className="edit-task-button" onClick={() => handleDeleteCategory(category.id)}>
+                                            <FaTrash />
                                             </button>
                                         </div>
                                     )}

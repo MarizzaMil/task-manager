@@ -6,26 +6,32 @@
 .menu-container h2 {
     font-size: 1.5em;
     margin-bottom: 10px;
-    color: #ffffff;
+    color: #323232;
 }
 
+p {
+    color: #323232;
+}
 .menu-container p {
     margin: 5px 0;
 }
 
 .logout-button {
-    margin-top: 10px;
-    padding: 10px 20px;
-    background-color: #ff4757;
-    color: #ffffff;
-    border: none;
-    border-radius: 5px;
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 40px;
     cursor: pointer;
+    background-color: #F0C1E1;
+    color: 323232;
+    border: none;
     transition: background-color 0.3s ease;
 }
 
 .logout-button:hover {
-    background-color: #ff6b81;
+    background-color: #CB9DF0;
 }
 
 .menu-links {
@@ -36,7 +42,7 @@
 }
 
 .menu-links a {
-    color: #ffffff;
+    color: #323232;
     text-decoration: none;
     margin: 5px 0;
     font-size: 1.1em;

@@ -25,14 +25,14 @@ h2 {
     justify-content: space-between;
     align-items: center;
     padding: 12px 15px;
-    border: 1px solid #e0e0e0; /* Lighter border for the items */
+    border: 1px solid #CB9DF0; /* Lighter border for the items */
     border-radius: 8px;
     margin-bottom: 10px; /* Spacing between items */
     transition: background-color 0.2s; /* Smooth hover effect */
 }
 
 .category-item:hover {
-    background-color: #f9f9f9; /* Highlight on hover */
+    background-color: #FFF9BF; /* Highlight on hover */
 }
 
 .category-content {
@@ -61,8 +61,8 @@ h2 {
 }
 
 .btn-add {
-    background-color: #4CAF50; /* Green for add */
-    color: white;
+    background-color: #FFF9BF; 
+    color: #323232;
 }
 
 .btn-edit {
@@ -106,3 +106,9 @@ h2 {
     display: flex;
     gap: 10px; /* Space between inputs and buttons */
 }
+
+.category-input:focus {
+    border-color: #5769D4; 
+    color: #323232; 
+    box-shadow: 0 0 10px 3px rgba(87, 105, 212, 0.30);
+  }

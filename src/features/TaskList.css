@@ -24,12 +24,13 @@
     display: flex;
     justify-content: space-between;
     gap: 20px;
+    
 }
 
 .task-column {
     flex: 1;
     padding: 10px;
-    background-color: #ffffff;
+    background-color: #FFF9BF;
     border-radius: 8px;
     box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
 }
@@ -47,3 +48,21 @@
     font-style: italic;
     margin-top: 20px;
 }
+.add-task-button {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 40px;
+    cursor: pointer;
+    background-color: #F0C1E1;
+    color: 323232;
+    border: none;
+    transition: background-color 0.3s ease;
+  }
+
+  
+  .add-task-button:hover {
+    background-color: #CB9DF0;
+  }
