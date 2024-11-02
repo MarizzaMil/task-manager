@@ -15,18 +15,16 @@ console.log("initialCategory", initialCategory)
 
     const handleCategoryChange = (selectedOption) => {
         setSelectedCategory(selectedOption);
-        setTaskData((prev) => ({ ...prev, category: selectedOption.value }));
+        setTaskData((prev) => ({ ...prev, category: categories.find(c => c.name === selectedOption.value) }));
     };
 
     useEffect(() => {
         setTaskData(task || { title: '', description: '', category: '' });
         if (task) {
             setSelectedCategory(options.find(option => option.label === task.category?.name) || null);
-
-        }else {
+        } else {
             setSelectedCategory(null);
         }
-        setSelectedCategory(task?.category?.name || ''); // Safely access category name
     }, [task]);
 
     const handleChange = (e) => {
