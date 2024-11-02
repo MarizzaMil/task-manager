@@ -6,7 +6,7 @@ import { FaEdit, FaCheck, FaTrash } from 'react-icons/fa';
 import { FaX } from 'react-icons/fa6';
 
 
-const Categories = () => {
+const Categories = ({ onCategorySelect, selectedCategory }) => {
     const { user } = useAuth();
     const [categories, setCategories] = useState([]);
     const [newCategory, setNewCategory] = useState('');
@@ -65,8 +65,20 @@ const Categories = () => {
                 <p>No categories available. Add some!</p>
             ) : (
                 <ul className="categories-list">
+                    <li
+                        className={`category-item ${selectedCategory === "All Tasks" ? "selected" : ""}`}
+                        onClick={() => onCategorySelect("All Tasks")}
+                    >
+                        All Tasks
+                    </li>
+
                     {categories.map(category => (
-                        <li key={category.id} className="category-item">
+                        
+                        <li 
+                            key={category.id} 
+                            className={`category-item ${selectedCategory === category.name ? "selected" : ""}`}
+                            onClick={() => onCategorySelect(category.name)}
+                        >
                             {editingCategory === category.id ? (
                                 <div className="category-content">
                                     <input

@@ -8,13 +8,14 @@ import AuthModal from '../components/AuthModal/AuthModal';
 import './TaskList.css';
 import { FaPlus } from 'react-icons/fa';
 
-const TaskList = () => {
+const TaskList = ({ selectedCategory }) => {
     const [tasks, setTasks] = useState([]);
     const [categories, setCategories] = useState([]); 
     const [currentTask, setCurrentTask] = useState(null);
     const [isTaskModalOpen, setIsTaskModalOpen] = useState(false);
     const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
     const { user } = useAuth();
+    const [filteredTasks, setFilteredTasks] = useState([]);
 
     useEffect(() => {
         const getTasks = async () => {
@@ -109,8 +110,20 @@ const TaskList = () => {
         }
     };
 
-    const todoTasks = tasks.filter(task => !task.completed);
-    const completedTasks = tasks.filter(task => task.completed);
+    useEffect(() => {
+        const filterTasks = () => {
+            if (selectedCategory === "All Tasks") {
+                setFilteredTasks(tasks);
+            } else {
+                setFilteredTasks(tasks.filter(task => task.category && task.category.name === selectedCategory));
+            }
+        };
+        filterTasks();
+    }, [selectedCategory, tasks]);
+
+
+    const todoTasks = filteredTasks.filter(task => !task.completed);
+    const completedTasks = filteredTasks.filter(task => task.completed);
 
     return (
         <div className="task-list-container">

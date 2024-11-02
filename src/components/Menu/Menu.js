@@ -3,7 +3,7 @@ import { useAuth } from '../../context/AuthContext';
 import Categories from '../Categories/Categories'; // Import the Categories component
 import './Menu.css';
 
-const Menu = () => {
+const Menu = ({ onCategorySelect, selectedCategory }) => {
     const { user, logout } = useAuth();
 
     return (
@@ -12,15 +12,13 @@ const Menu = () => {
             {user && (
                 <>
                     <p className="menu-links">Email: {user.user.email}</p>
-                    <button className="logout-button" onClick={logout}>
-                        Logout
-                    </button>
+                    <button className="logout-button" onClick={logout}>Logout</button>
                 </>
             )}
-
-            <Categories /> 
+            <Categories onCategorySelect={onCategorySelect} selectedCategory={selectedCategory} />
         </div>
     );
 };
 
 export default Menu;
+

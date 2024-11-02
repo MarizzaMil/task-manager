@@ -31,6 +31,12 @@ h2 {
     transition: background-color 0.2s; /* Smooth hover effect */
 }
 
+.category-item.selected {
+    background-color: #d3cfd1;
+    color: #333;
+    font-weight: bold;
+}
+
 .category-item .category-name {
     background-color: #FDDBBB; 
 }
