@@ -3,7 +3,9 @@ import './TaskModal.css';
 
 const TaskModal = ({ task, onSave, onClose, categories = [] }) => {
     const [taskData, setTaskData] = useState(task || { title: '', description: '', category: '' });
-    const [selectedCategory, setSelectedCategory] = useState(task.category || '');
+    const [selectedCategory, setSelectedCategory] = useState(task.category.name || '');
+
+    console.log("task.category",task.category.name )
 
     const handleCategoryChange = (e) => {
         const newCategory = e.target.value;
@@ -15,7 +17,7 @@ const TaskModal = ({ task, onSave, onClose, categories = [] }) => {
 
     useEffect(() => {
         setTaskData(task || { title: '', description: '', category: '' });
-        setSelectedCategory(task.category || '');
+        setSelectedCategory(task.category.name || '');
     }, [task]);
 
     const handleChange = (e) => {
