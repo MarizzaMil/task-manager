@@ -2,10 +2,11 @@ import React, { useState, useEffect } from 'react';
 import './TaskModal.css';
 
 const TaskModal = ({ task, onSave, onClose, categories = [] }) => {
-    const [taskData, setTaskData] = useState(task || { title: '', description: '', category: '' });
-    const [selectedCategory, setSelectedCategory] = useState(task.category.name || '');
+    const initialTaskData = task || { title: '', description: '', category: '' };
+    const initialCategory = task?.category?.name || ''; // Safely access category name
 
-    console.log("task.category",task.category.name )
+    const [taskData, setTaskData] = useState(initialTaskData);
+    const [selectedCategory, setSelectedCategory] = useState(initialCategory);
 
     const handleCategoryChange = (e) => {
         const newCategory = e.target.value;
@@ -17,7 +18,7 @@ const TaskModal = ({ task, onSave, onClose, categories = [] }) => {
 
     useEffect(() => {
         setTaskData(task || { title: '', description: '', category: '' });
-        setSelectedCategory(task.category.name || '');
+        setSelectedCategory(task?.category?.name || ''); // Safely access category name
     }, [task]);
 
     const handleChange = (e) => {

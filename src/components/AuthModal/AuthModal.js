@@ -69,15 +69,16 @@ const AuthModal = ({ onClose }) => {
                 <h2>{isRegistering ? 'Register' : 'Log in'}</h2>
                 <div className="auth-forms">
                     <form onSubmit={(e) => handleAuth(e, isRegistering ? 'register' : 'login')}>
-                        <h3>{isRegistering ? 'Register' : 'Log in'}</h3>
                         <Input
                             placeholder="Email"
+                            icon="icon.png"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                         />
                         {errors.email && <p className="error-message">{errors.email}</p>}
                         <Input
                             placeholder="Password"
+                            icon="lock.png"
                             type="password"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
@@ -86,6 +87,7 @@ const AuthModal = ({ onClose }) => {
                         {isRegistering && (
                             <Input
                                 placeholder="Confirm Password"
+                                icon="lock.png"
                                 type="password"
                                 value={confirmPassword}
                                 onChange={(e) => setConfirmPassword(e.target.value)}

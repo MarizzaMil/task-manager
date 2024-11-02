@@ -8,68 +8,128 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 1000;
-}
-
-.modal-content {
-    background: #fff;
-    padding: 40px;
-    border-radius: 10px;
+    z-index: 1000; 
+  }
+  
+  .modal-content {
+    background: white;
+    border-radius: 8px;
+    padding: 20px;
     width: 400px;
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
     position: relative;
-}
-
-.close-button {
+  }
+  
+  .close-button {
     position: absolute;
     top: 10px;
     right: 10px;
     background: transparent;
     border: none;
-    font-size: 18px;
+    color:  #27368F;
+    font-size: 20px;
     cursor: pointer;
-    color: #3949AB;
-}
-
-.auth-forms {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.error-message {
+  }
+  
+  .auth-forms {
+    margin-top: 20px;
+  }
+  
+  .error-message {
     color: #d9534f;
     font-size: 0.875rem;
-    margin-top: 0.25rem;
-    margin-bottom: 0.5rem;
-}
-
-h3 {
+    margin-top: 0.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  h2 {
+    font-weight: 600;
+    color: #3949AB; 
+    text-align: center;
+    margin-bottom: 10px;
+  }
+  
+  h3 {
+    font-weight: 600;
     color: #3949AB;
-    margin-bottom: 20px;
-}
-
-.button {
+    margin-bottom: 15px;
+    text-align: center;
+  }
+  
+  .button {
     width: 100%;
-    padding: 12px;
+    padding: 10px;
     margin: 10px 0;
-    font-size: 16px;
-    border-radius: 5px;
-    transition: background-color 0.3s;
-}
-
-.button.primary {
-    background-color: #3949AB;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 40px;
+    cursor: pointer;
+    background-color: #5769D4;
+  }
+  
+  .button.submit {
+    background-color: #5769D4;
     color: white;
-}
-
-.button.secondary {
+    border: none;
+    transition: background-color 0.3s ease;
+  }
+  
+  .button.submit:hover {
+    background-color: #27368F;
+  }
+  
+  .button.submit:disabled {
+    background-color: #3949AB;
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+  
+  .button.secondary {
     background-color: transparent;
     color: #3949AB;
     border: 2px solid #3949AB;
-}
-
-.button.secondary:hover {
-    background-color: #3949AB;
-    color: white;
-}
+  }
+  
+  .button.secondary:hover {
+    background-color: #27368F;
+    color: #FFF;
+  }
+  
+  .input-container {
+    position: relative;
+    width: 100%;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+  }
+  
+  .input-icon {
+    position: absolute;
+    left: 10px; 
+    width: 20px;
+    height: 20px;
+  }
+  
+  .password-icon {
+    right: 10px;
+    left: auto; 
+  }
+  
+  .input-field {
+    padding: 10px; 
+    padding-left: 40px;
+    width: 100%;
+    border: 1px solid #D0D0D0;
+    border-radius: 8px;
+    font-size: 16px;
+    box-sizing: border-box;
+    font-size: 14px;
+    color: #828282;
+    font-weight: 400;
+  }
+  
+  .input-field:focus {
+    border-color: #5769D4; 
+    color: #323232; 
+    box-shadow: 0 0 10px 3px rgba(87, 105, 212, 0.30);
+  }
