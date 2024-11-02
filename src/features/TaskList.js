@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { fetchTasks, deleteTask, updateTask, createTask } from '../services/apiTask';
-import { fetchCategories } from '../services/apiCategory'; 
+import { fetchCategories } from '../services/apiCategory';
 import TaskItem from '../components/TaskItem/TaskItem';
 import { useAuth } from '../context/AuthContext';
 import TaskModal from '../components/TaskModal/TaskModal';
@@ -10,7 +10,7 @@ import { FaPlus } from 'react-icons/fa';
 
 const TaskList = ({ selectedCategory }) => {
     const [tasks, setTasks] = useState([]);
-    const [categories, setCategories] = useState([]); 
+    const [categories, setCategories] = useState([]);
     const [currentTask, setCurrentTask] = useState(null);
     const [isTaskModalOpen, setIsTaskModalOpen] = useState(false);
     const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
@@ -22,17 +22,17 @@ const TaskList = ({ selectedCategory }) => {
             try {
                 const tasksResponse = await fetchTasks();
                 const categoriesResponse = await fetchCategories();
-        
+
                 const categoryMap = Object.fromEntries(
                     categoriesResponse.map(category => [category.id, category])
                 );
-        
+
                 const tasksWithCategoryNames = tasksResponse.map(task => {
                     const category = task.category ? categoryMap[task.category.id] : null;
-        
+
                     return {
                         ...task,
-                        category: category ? category : null 
+                        category: category ? category : null
                     };
                 });
 
@@ -45,7 +45,7 @@ const TaskList = ({ selectedCategory }) => {
         const getCategories = async () => {
             try {
                 const response = await fetchCategories();
-                const categoryNames = response.map(category => category.name); 
+                const categoryNames = response.map(category => category.name);
                 setCategories(categoryNames);
             } catch (error) {
                 console.error('Error fetching categories:', error);
@@ -53,7 +53,7 @@ const TaskList = ({ selectedCategory }) => {
         };
 
         getTasks();
-        getCategories(); 
+        getCategories();
     }, []);
 
     const handleDelete = async (id) => {
@@ -70,25 +70,25 @@ const TaskList = ({ selectedCategory }) => {
             if (task.id) {
                 const updatedTask = await updateTask(task.id, task);
                 console.log("updatedTask", updatedTask);
-    
-                const updatedTasks = tasks.map(t => 
-                    t.id === task.id 
-                        ? { 
-                            ...t, 
-                            ...updatedTask, 
-                            category: categories.find(c => c.name === updatedTask.category.name) || updatedTask.category 
-                        } 
+
+                const updatedTasks = tasks.map(t =>
+                    t.id === task.id
+                        ? {
+                            ...t,
+                            ...updatedTask,
+                            category: categories.find(c => c.name === updatedTask.category.name) || updatedTask.category
+                        }
                         : t
                 );
                 console.log("updatedTasks", updatedTasks);
                 setTasks(updatedTasks);
             } else {
                 const createdTask = await createTask(task);
-                console.log("createdTask",createdTask)
+                console.log("createdTask", createdTask)
                 setTasks([...tasks, createdTask]);
             }
             setIsTaskModalOpen(false);
-            setCurrentTask(null); 
+            setCurrentTask(null);
         }
     };
 
@@ -139,38 +139,38 @@ const TaskList = ({ selectedCategory }) => {
                     {todoTasks.length > 0 ? (
                         todoTasks.map(task => (
                             <TaskItem
-                                key={task.id} 
-                                task={task} 
-                                onDelete={handleDelete} 
-                                onEdit={() => openEditModal(task)} 
+                                key={task.id}
+                                task={task}
+                                onDelete={handleDelete}
+                                onEdit={() => openEditModal(task)}
                                 onToggleCompleted={async (id) => {
                                     const updatedTask = { ...task, completed: !task.completed };
                                     await updateTask(id, updatedTask);
                                     setTasks(tasks.map(t => (t.id === id ? updatedTask : t)));
                                 }}
-                                categories={categories} 
+                                categories={categories}
                             />
                         ))
                     ) : (
                         <p className="no-tasks-message">No tasks to do!</p>
                     )}
                 </div>
-                
+
                 <div className="task-column">
                     <h2>Completed</h2>
                     {completedTasks.length > 0 ? (
                         completedTasks.map(task => (
-                            <TaskItem 
-                                key={task.id} 
-                                task={task} 
-                                onDelete={handleDelete} 
-                                onEdit={() => openEditModal(task)} 
+                            <TaskItem
+                                key={task.id}
+                                task={task}
+                                onDelete={handleDelete}
+                                onEdit={() => openEditModal(task)}
                                 onToggleCompleted={async (id) => {
                                     const updatedTask = { ...task, completed: !task.completed };
                                     await updateTask(id, updatedTask);
                                     setTasks(tasks.map(t => (t.id === id ? updatedTask : t)));
                                 }}
-                                categories={categories} 
+                                categories={categories}
                             />
                         ))
                     ) : (
@@ -184,7 +184,7 @@ const TaskList = ({ selectedCategory }) => {
                     task={currentTask}
                     onSave={handleSaveTask}
                     onClose={() => setIsTaskModalOpen(false)}
-                    categories={categories} 
+                    categories={categories}
                 />
             )}
         </div>

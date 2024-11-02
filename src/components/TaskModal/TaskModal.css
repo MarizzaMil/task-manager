@@ -4,7 +4,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0, 0, 0, 0.6); /* Darker overlay */
+    background: rgba(0, 0, 0, 0.6); 
     display: flex;
     align-items: center;
     justify-content: center;
@@ -104,7 +104,7 @@
     font-size: 14px;
     color: #828282;
     background-color: #ffffff;
-    appearance: none; /* Remove default arrow */
+    appearance: none; 
     background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="%23323232" viewBox="0 0 16 16"><path d="M2 5.5L8 11l6-5.5H2z"/></svg>'); /* Custom dropdown arrow */
     background-repeat: no-repeat;
     background-position: right 10px center;
@@ -125,5 +125,5 @@
 }
 
 .category-dropdown option:hover {
-    background-color: #BDE8CA; /* Highlight option on hover */
+    background-color: #BDE8CA; 
 }

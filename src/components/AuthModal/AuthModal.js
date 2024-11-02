@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import './AuthModal.css'; 
+import './AuthModal.css';
 import Input from '../UI/Input';
 import Button from '../UI/Button';
-import { login as apiLogin, register as apiRegister } from '../../services/apiAuth'; 
+import { login as apiLogin, register as apiRegister } from '../../services/apiAuth';
 import { useAuth } from '../../context/AuthContext';
 
 const AuthModal = ({ onClose }) => {
@@ -11,9 +11,9 @@ const AuthModal = ({ onClose }) => {
     const [confirmPassword, setConfirmPassword] = useState('');
     const [isDisabled, setIsDisabled] = useState(true);
     const [isRegistering, setIsRegistering] = useState(false);
-    const [errors, setErrors] = useState({}); 
-    const [loading, setLoading] = useState(false); 
-    const { login } = useAuth(); 
+    const [errors, setErrors] = useState({});
+    const [loading, setLoading] = useState(false);
+    const { login } = useAuth();
 
     useEffect(() => {
         setIsDisabled(email.trim() === '' || password.trim() === '' || (isRegistering && confirmPassword.trim() === ''));
@@ -21,9 +21,9 @@ const AuthModal = ({ onClose }) => {
 
     const validateFields = () => {
         const newErrors = {};
-        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; 
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         const isValidEmail = emailPattern.test(email);
-        const isValidPassword = password.length >= 6; 
+        const isValidPassword = password.length >= 6;
         const passwordsMatch = password === confirmPassword;
 
         if (!isValidEmail) newErrors.email = 'Please enter a valid email address.';
@@ -31,7 +31,7 @@ const AuthModal = ({ onClose }) => {
         if (isRegistering && !passwordsMatch) newErrors.confirmPassword = 'Passwords do not match.';
 
         setErrors(newErrors);
-        return Object.keys(newErrors).length === 0; 
+        return Object.keys(newErrors).length === 0;
     };
 
     const handleAuth = async (e, action) => {
@@ -39,11 +39,11 @@ const AuthModal = ({ onClose }) => {
         if (validateFields()) {
             setLoading(true);
             try {
-                const response = action === 'login' 
-                    ? await apiLogin(email, password) 
+                const response = action === 'login'
+                    ? await apiLogin(email, password)
                     : await apiRegister(email, password);
                 if (response.token) {
-                    login(response); 
+                    login(response);
                     onClose();
                 } else {
                     setErrors({ general: response.message || `${action === 'login' ? 'Login' : 'Sign Up'} failed` });
@@ -96,7 +96,7 @@ const AuthModal = ({ onClose }) => {
                         {errors.confirmPassword && <p className="error-message">{errors.confirmPassword}</p>}
                         <Button
                             title={loading ? "Loading..." : (isRegistering ? "Register" : "Log in")}
-                            type="submit"  
+                            type="submit"
                             disabled={isDisabled || loading}
                         />
                     </form>

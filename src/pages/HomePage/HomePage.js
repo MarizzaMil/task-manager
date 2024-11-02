@@ -4,7 +4,7 @@ import Menu from '../../components/Menu/Menu';
 import './HomePage.css';
 
 const HomePage = () => {
-    const [selectedCategory, setSelectedCategory] = useState("All Tasks"); // Default category
+    const [selectedCategory, setSelectedCategory] = useState("All Tasks"); 
 
     return (
         <div className="homepage-container">

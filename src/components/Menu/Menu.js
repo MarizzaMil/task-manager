@@ -1,6 +1,6 @@
 import React from 'react';
 import { useAuth } from '../../context/AuthContext';
-import Categories from '../Categories/Categories'; // Import the Categories component
+import Categories from '../Categories/Categories'; 
 import './Menu.css';
 
 const Menu = ({ onCategorySelect, selectedCategory }) => {
@@ -15,6 +15,7 @@ const Menu = ({ onCategorySelect, selectedCategory }) => {
                     <button className="logout-button" onClick={logout}>Logout</button>
                 </>
             )}
+            <hr/>
             <Categories onCategorySelect={onCategorySelect} selectedCategory={selectedCategory} />
         </div>
     );

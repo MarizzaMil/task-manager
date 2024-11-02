@@ -10,9 +10,9 @@
 }
 
 h2 {
-    color: #333; /* Darker text for the title */
+    color: #333; 
     margin-bottom: 20px;
-    text-align: center; /* Center align title */
+    text-align: center; 
 }
 
 .categories-list {
@@ -25,14 +25,16 @@ h2 {
     justify-content: space-between;
     align-items: center;
     padding: 12px 15px;
-    border: 1px solid #CB9DF0; /* Lighter border for the items */
+    border: 1px solid #CB9DF0; 
     border-radius: 8px;
-    margin-bottom: 10px; /* Spacing between items */
-    transition: background-color 0.2s; /* Smooth hover effect */
+    margin-bottom: 10px; 
+    transition: background-color 0.2s; 
+    color: #323232;
+    
 }
 
 .category-item.selected {
-    background-color: #d3cfd1;
+    background-color: #CB9DF0;
     color: #333;
     font-weight: bold;
 }

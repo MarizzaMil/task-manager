@@ -52,3 +52,7 @@ p {
 .menu-links a:hover {
     color: #1e90ff;
 }
+
+a {
+    color: #323232;
+}

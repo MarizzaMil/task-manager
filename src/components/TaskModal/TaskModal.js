@@ -1,27 +1,32 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import './TaskModal.css';
 import Select from 'react-select';
 
 const TaskModal = ({ task, onSave, onClose, categories = [] }) => {
     const initialTaskData = task || { title: '', description: '', category: '' };
-    const initialCategory = task?.category?.name || ''; 
-    const options = categories.map(category => ({
-        value: category.name,
-        label: category,
-    }));
+
+    const options = useMemo(() =>
+        categories.map(category => ({
+            value: category,
+            label: category,
+        })),
+        [categories]
+    );
 
     const [taskData, setTaskData] = useState(initialTaskData);
-    const [selectedCategory, setSelectedCategory] = useState(initialCategory);
+    const [selectedCategory, setSelectedCategory] = useState(
+        task ? options.find(option => option.value === task.category?.name) : null
+    );
 
     const handleCategoryChange = (selectedOption) => {
         setSelectedCategory(selectedOption);
-        setTaskData((prev) => ({ ...prev, category: categories.find(c => c.name === selectedOption.value) }));
+        setTaskData((prev) => ({ ...prev, category: selectedOption.value }));
     };
 
     useEffect(() => {
         setTaskData(task || { title: '', description: '', category: '' });
         if (task) {
-            setSelectedCategory(options.find(option => option.label === task.category?.name) || null);
+            setSelectedCategory(options.find(option => option.value === task.category?.name) || null);
         } else {
             setSelectedCategory(null);
         }
@@ -34,7 +39,7 @@ const TaskModal = ({ task, onSave, onClose, categories = [] }) => {
 
     const handleSave = () => {
         if (taskData.title.trim()) {
-            onSave(taskData);
+            onSave({ ...taskData, category: selectedCategory?.value || '' });
         }
     };
 

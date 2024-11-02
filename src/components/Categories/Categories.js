@@ -73,9 +73,9 @@ const Categories = ({ onCategorySelect, selectedCategory }) => {
                     </li>
 
                     {categories.map(category => (
-                        
-                        <li 
-                            key={category.id} 
+
+                        <li
+                            key={category.id}
                             className={`category-item ${selectedCategory === category.name ? "selected" : ""}`}
                             onClick={() => onCategorySelect(category.name)}
                         >
@@ -90,24 +90,24 @@ const Categories = ({ onCategorySelect, selectedCategory }) => {
                                     />
                                     <div className="action-buttons">
                                         <button className="edit-task-button" onClick={() => handleEditCategory(category.id)}>
-                                        <FaCheck />
+                                            <FaCheck />
                                         </button>
                                         <button className="edit-task-button" onClick={() => setEditingCategory(null)}>
-                                        <FaX />
+                                            <FaX />
                                         </button>
                                     </div>
 
                                 </div>
                             ) : (
                                 <div className="category-content">
-                                    <span className="category-name">{category.name}</span>
+                                    <span className="category-name-menu">{category.name}</span>
                                     {user && (
                                         <div className="action-buttons">
                                             <button className="edit-task-button" onClick={() => { setEditingCategory(category.id); setEditingCategoryName(category.name); }}>
-                                            <FaEdit />
+                                                <FaEdit />
                                             </button>
                                             <button className="edit-task-button" onClick={() => handleDeleteCategory(category.id)}>
-                                            <FaTrash />
+                                                <FaTrash />
                                             </button>
                                         </div>
                                     )}
