@@ -1,16 +1,26 @@
 import React, { useState, useEffect } from 'react';
 import './TaskModal.css';
 
-const TaskModal = ({ task, onSave, onClose }) => {
-    const [taskData, setTaskData] = useState(task || { title: '', description: '' });
+const TaskModal = ({ task, onSave, onClose, categories = [] }) => {
+    const [taskData, setTaskData] = useState(task || { title: '', description: '', category: '' });
+    const [selectedCategory, setSelectedCategory] = useState(task.category || '');
+
+    const handleCategoryChange = (e) => {
+        const newCategory = e.target.value;
+        setSelectedCategory(newCategory);
+
+        // Update taskData with the selected category
+        setTaskData((prev) => ({ ...prev, category: newCategory }));
+    };
 
     useEffect(() => {
-        setTaskData(task || { title: '', description: '' });
+        setTaskData(task || { title: '', description: '', category: '' });
+        setSelectedCategory(task.category || '');
     }, [task]);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setTaskData(prev => ({ ...prev, [name]: value }));
+        setTaskData((prev) => ({ ...prev, [name]: value }));
     };
 
     const handleSave = () => {
@@ -38,6 +48,16 @@ const TaskModal = ({ task, onSave, onClose }) => {
                     placeholder="Task Description"
                     className="task-input"
                 />
+                <select
+                    value={selectedCategory}
+                    onChange={handleCategoryChange}
+                    className="category-dropdown"
+                >
+                    <option value="">Select Category</option>
+                    {categories.map((category) => (
+                        <option key={category} value={category}>{category}</option>
+                    ))}
+                </select>
                 <div className="modal-actions">
                     <button className="save-task-button" onClick={handleSave}>
                         Save

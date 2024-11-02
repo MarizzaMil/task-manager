@@ -5,8 +5,8 @@
     background-color: #ffffff;
     border-radius: 5px;
     box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
-    transition: box-shadow 0.3s;
     justify-content: space-between;
+    transition: box-shadow 0.3s;
 }
 
 .task-item:hover {
@@ -29,37 +29,35 @@
 }
 
 .task-description {
-    color: #555;
-    margin: 5px 0;
+    color: #666;
+}
+
+.category-dropdown {
+    margin-top: 10px;
+    padding: 8px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
 }
 
 .completed-checkbox {
-    margin-right: 15px;
+    margin-right: 10px;
 }
 
 .task-actions {
     display: flex;
-    align-items: center;
+    gap: 10px;
 }
 
-.edit-task-button, .delete-task-button {
-    background: none;
+.edit-task-button,
+.delete-task-button {
+    background: transparent;
     border: none;
     cursor: pointer;
+    color: #3949AB;
     font-size: 1.2em;
-    margin-left: 10px;
-    color: #555;
-    transition: color 0.3s;
 }
 
-.edit-task-button:hover {
-    color: #2196F3; 
-}
-
-.delete-task-button {
-    color: #f44336;
-}
-
+.edit-task-button:hover,
 .delete-task-button:hover {
-    color: #e53935;
+    color: #1976D2;
 }

@@ -14,6 +14,9 @@ const TaskItem = ({ task, onDelete, onEdit, onToggleCompleted }) => {
             <div className="task-content">
                 <h2 className={`task-title ${task.completed ? 'completed' : ''}`}>{task.title}</h2>
                 <p className="task-description">{task.description}</p>
+
+                {task.category && <p className="category-name">{task.category}</p>}
+
             </div>
             <div className="task-actions">
                 <button className="edit-task-button" onClick={onEdit}>

@@ -13,7 +13,7 @@ const AuthModal = ({ onClose }) => {
     const [isRegistering, setIsRegistering] = useState(false);
     const [errors, setErrors] = useState({}); 
     const [loading, setLoading] = useState(false); 
-    const { login } = useAuth();  // Inject login function from AuthContext
+    const { login } = useAuth(); 
 
     useEffect(() => {
         setIsDisabled(email.trim() === '' || password.trim() === '' || (isRegistering && confirmPassword.trim() === ''));
@@ -26,48 +26,30 @@ const AuthModal = ({ onClose }) => {
         const isValidPassword = password.length >= 6; 
         const passwordsMatch = password === confirmPassword;
 
-        if (!isValidEmail && !isDisabled) newErrors.email = 'Please enter a valid email address.';
-        if (!isValidPassword && !isDisabled) newErrors.password = 'Password must be at least 6 characters.';
-        if (isRegistering && !passwordsMatch && !isDisabled) newErrors.confirmPassword = 'Passwords do not match.';
+        if (!isValidEmail) newErrors.email = 'Please enter a valid email address.';
+        if (!isValidPassword) newErrors.password = 'Password must be at least 6 characters.';
+        if (isRegistering && !passwordsMatch) newErrors.confirmPassword = 'Passwords do not match.';
 
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0; 
     };
 
-    const handleLogin = async (e) => {
+    const handleAuth = async (e, action) => {
         e.preventDefault();
         if (validateFields()) {
             setLoading(true);
             try {
-                const response = await apiLogin(email, password);
+                const response = action === 'login' 
+                    ? await apiLogin(email, password) 
+                    : await apiRegister(email, password);
                 if (response.token) {
                     login(response); 
                     onClose();
                 } else {
-                    setErrors({ general: response.message || 'Login failed' });
+                    setErrors({ general: response.message || `${action === 'login' ? 'Login' : 'Sign Up'} failed` });
                 }
             } catch (error) {
-                setErrors({ general: error.response?.data?.message || 'Login failed' });
-            } finally {
-                setLoading(false);
-            }
-        }
-    };
-
-    const handleRegister = async (e) => {
-        e.preventDefault();
-        if (validateFields()) {
-            setLoading(true);
-            try {
-                const response = await apiRegister(email, password);
-                if (response.token) {
-                    login(response); 
-                    onClose();
-                } else {
-                    setErrors({ general: response.message || 'Sign Up failed' });
-                }            
-            } catch (error) {
-                setErrors({ general: error.response?.data?.message || 'Registration failed' });
+                setErrors({ general: error.response?.data?.message || `${action === 'login' ? 'Login' : 'Registration'} failed` });
             } finally {
                 setLoading(false);
             }
@@ -77,7 +59,7 @@ const AuthModal = ({ onClose }) => {
     const toggleForm = () => {
         setIsRegistering((prev) => !prev);
         setConfirmPassword('');
-        setErrors({})
+        setErrors({});
     };
 
     return (
@@ -86,60 +68,42 @@ const AuthModal = ({ onClose }) => {
                 <button className="close-button" onClick={onClose}>X</button>
                 <h2>{isRegistering ? 'Register' : 'Log in'}</h2>
                 <div className="auth-forms">
-                    <div className={`form-container ${isRegistering ? 'right' : 'left'}`}>
-                        <form onSubmit={isRegistering ? handleRegister : handleLogin}>
-                            <h3>{isRegistering ? 'Register' : 'Log in'}</h3>
+                    <form onSubmit={(e) => handleAuth(e, isRegistering ? 'register' : 'login')}>
+                        <h3>{isRegistering ? 'Register' : 'Log in'}</h3>
+                        <Input
+                            placeholder="Email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                        />
+                        {errors.email && <p className="error-message">{errors.email}</p>}
+                        <Input
+                            placeholder="Password"
+                            type="password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                        />
+                        {errors.password && <p className="error-message">{errors.password}</p>}
+                        {isRegistering && (
                             <Input
-                                placeholder="Email"
-                                icon="icon.png"
-                                value={email}
-                                onChange={(e) => {
-                                    setEmail(e.target.value);
-                                    setErrors(prev => ({ ...prev, email: undefined })); 
-                                }}
-                            />
-                            {errors.email && <p className="error-message">{errors.email}</p>}
-                            <Input
-                                placeholder="Password"
-                                icon="lock.png"
+                                placeholder="Confirm Password"
                                 type="password"
-                                value={password}
-                                onChange={(e) => {
-                                    setPassword(e.target.value);
-                                    setErrors(prev => ({ ...prev, password: undefined })); 
-                                }}
+                                value={confirmPassword}
+                                onChange={(e) => setConfirmPassword(e.target.value)}
                             />
-                            {errors.password && <p className="error-message">{errors.password}</p>}
-                            {isRegistering && (
-                                <Input
-                                    placeholder="Confirm Password"
-                                    icon="lock.png"
-                                    type="password"
-                                    value={confirmPassword}
-                                    onChange={(e) => {
-                                        setConfirmPassword(e.target.value);
-                                        setErrors(prev => ({ ...prev, confirmPassword: undefined })); 
-                                    }}
-                                />
-                            )}
-                            {errors.confirmPassword && <p className="error-message">{errors.confirmPassword}</p>}
-                            {loading ? (
-                                <Button title="Loading..." disabled />
-                            ) : (
-                                <Button
-                                    title={isRegistering ? "Register" : "Log in"}
-                                    type="submit"  
-                                    disabled={isDisabled}
-                                />
-                            )}
-                        </form>
-                        <p>{isRegistering ? "Already have an account?" : "Don't have an account yet?"}</p>
-                            <Button
-                                title={isRegistering ? "Log in" : "Register"}
-                                type="secondary"
-                                onClick={toggleForm}
-                            />
-                    </div>
+                        )}
+                        {errors.confirmPassword && <p className="error-message">{errors.confirmPassword}</p>}
+                        <Button
+                            title={loading ? "Loading..." : (isRegistering ? "Register" : "Log in")}
+                            type="submit"  
+                            disabled={isDisabled || loading}
+                        />
+                    </form>
+                    <p>{isRegistering ? "Already have an account?" : "Don't have an account yet?"}</p>
+                    <Button
+                        title={isRegistering ? "Log in" : "Register"}
+                        type="secondary"
+                        onClick={toggleForm}
+                    />
                 </div>
             </div>
         </div>
